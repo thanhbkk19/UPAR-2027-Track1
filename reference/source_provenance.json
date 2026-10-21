@@ -1,0 +1,72 @@
+{
+  "scripts/fit_clip_heads.py": {
+    "source": "scripts/fit_clip_heads.py",
+    "source_sha256": "943ca7c611b5f72904d3cddbbfb8e22f19957a8e9d3ea674789dca933d26185c",
+    "modified": false
+  },
+  "scripts/validate_submission.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/validate_submission.py",
+    "source_sha256": "9cb1c386686d5286b8a5bbadc361851bfdf6de2a89a35e19f15bb0f5f4e045c8",
+    "modified": false
+  },
+  "scripts/robust_head_screen.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/robust_head_screen.py",
+    "source_sha256": "3dbe681dcbcaa5846083e263a29c72d333b60444cec7d9a841b71899e1dacc5a",
+    "modified": false
+  },
+  "scripts/training_utils.py": {
+    "source": "scripts/distill_compact.py",
+    "source_sha256": "93b014924d5e003f5fdfca257c502588ff74675c09e11fde2bacdecd880dc0a3",
+    "modified": true
+  },
+  "scripts/resolution_probe.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/resolution_probe.py",
+    "source_sha256": "a3811846d9c9f59f96693f6c24ee82df1cf5e0249535a8aeb16290af69d643dd",
+    "modified": false
+  },
+  "scripts/fold_eval.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/fold_eval.py",
+    "source_sha256": "5f36d2601fc4d0c161b402bbff1c3826fe2f87513450fdf09e95159920774f6b",
+    "modified": false
+  },
+  "scripts/robust_head_release.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/robust_head_release.py",
+    "source_sha256": "2df69fda4f9d2f350d07f1eb20e3a0c5736d401e11b42826c9237a869fd58eb8",
+    "modified": false
+  },
+  "scripts/clip_large.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/clip_large.py",
+    "source_sha256": "0938a0595c4ba625515a9b45ce00b24c981cab313621b0c05333096e6afea42e",
+    "modified": false
+  },
+  "scripts/train_clip_large.py": {
+    "source": "scripts/train_clip_large.py",
+    "source_sha256": "92d163cce95df0faf718b54be04908f89973baece1be7ed2ccf2ac8791ed698a",
+    "modified": true
+  },
+  "scripts/metrics.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/metrics.py",
+    "source_sha256": "1cc258a0c05b5a66dd000998a17fb38cab339f9469885e8bd7f56d2117f2e876",
+    "modified": false
+  },
+  "scripts/attribute_losses.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/attribute_losses.py",
+    "source_sha256": "bbdbe2e6a07e847c6121a4a68ddf2f6f6dd27778dc097dc14fc7333c75a91e2a",
+    "modified": false
+  },
+  "scripts/data.py": {
+    "source": "artifacts/head_recovery_v18/source_snapshot/data.py",
+    "source_sha256": "85ceefbec5d9c1afe04e80f5b7c8c42034bb1c01f42d9684c33617eefbb7df93",
+    "modified": false
+  },
+  "scripts/cache_clip_large.py": {
+    "source": "scripts/cache_clip_large.py",
+    "source_sha256": "a60dfbb514e17ffe3498185fa15d681131b4305a3d4b2b1926a8df56ee9ab8c9",
+    "modified": false
+  },
+  "scripts/vlm_attributes.py": {
+    "source": "scripts/vlm_attributes.py",
+    "source_sha256": "3b13767300f955ff377129e11bfde90bdcc3fe63116dcd613b939f7604bbbe5e",
+    "modified": false
+  }
+}

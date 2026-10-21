@@ -1,0 +1,21 @@
+{
+  "pe": {
+    "repo_id": "timm/vit_pe_core_large_patch14_336.fb",
+    "revision": "e63206c8e3a0e9b699e40f31080eebd78fd2258e",
+    "filename": "model.safetensors",
+    "sha256": "35edcdb68eb43329192fc1530c246191e8a72f9a3dae01e2c7cccf05338d4cac",
+    "directory": "artifacts/pretrained/pe_core_l"
+  },
+  "eva": {
+    "repo_id": "timm/eva02_large_patch14_clip_224.merged2b",
+    "revision": "1ac33bee61b1bc3744de28b398d932c0ec1e5185",
+    "filename": "model.safetensors",
+    "sha256": "0e3346b229796ef960b239123d77204a9fc39657e9429051f08c737a9d2fa713",
+    "directory": "artifacts/pretrained/eva02_l_clip"
+  },
+  "teacher": {
+    "repo_id": "Qwen/Qwen3-VL-8B-Instruct",
+    "revision": "0c351dd01ed87e9c1b53cbc748cba10e6187ff3b",
+    "directory": "artifacts/pretrained/qwen3_vl_8b"
+  }
+}

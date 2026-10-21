@@ -1,0 +1,185 @@
+{
+  "status": "PASS",
+  "checked_utc": "2026-10-21T13:57:16.686472+00:00",
+  "target_archive": "UPAR_Track1_PE_EVA_Balanced_v18.zip",
+  "target_sha256": "3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d",
+  "environment": {
+    "python": "3.12.3",
+    "packages": {
+      "torch": "2.11.0",
+      "torchvision": "0.26.0",
+      "timm": "1.0.22",
+      "numpy": "2.5.3",
+      "Pillow": "12.3.0",
+      "safetensors": "0.8.0",
+      "huggingface-hub": "2.1.1",
+      "PyYAML": "6.0.3"
+    },
+    "cuda_available": true,
+    "cuda_runtime": "13.0",
+    "gpu": "NVIDIA RTX PRO 6000 Blackwell Workstation Edition",
+    "recorded_training_cuda_runtime": "12.8",
+    "cuda_matches_recorded_training": false,
+    "mismatches": []
+  },
+  "data": {
+    "status": "PASS",
+    "rows": {
+      "train": 117970,
+      "tune": 6554,
+      "audit": 6552,
+      "val": 13106,
+      "teacher": 24000
+    },
+    "all_split_csv_hashes_match": true,
+    "recorded_groups_disjoint": true,
+    "images_checked": true
+  },
+  "cpu_unit_tests": {
+    "passed": 5,
+    "command": "python -m unittest discover -s tests -v"
+  },
+  "entrypoints": {
+    "status": "PASS",
+    "entrypoints": [
+      "scripts/train_clip_large.py",
+      "scripts/fit_clip_heads.py",
+      "scripts/cache_clip_large.py",
+      "scripts/robust_head_release.py",
+      "scripts/vlm_attributes.py",
+      "scripts/validate_submission.py"
+    ]
+  },
+  "interpolation_from_pretrained_and_selected_ema": {
+    "pe": {
+      "tensors": 317,
+      "exactly_equal": true,
+      "mismatches": []
+    },
+    "eva": {
+      "tensors": 519,
+      "exactly_equal": true,
+      "mismatches": []
+    }
+  },
+  "source_and_teacher_head_refit_on_original_caches": {
+    "pe": {
+      "source_heads": 3,
+      "teacher_rows": 24000,
+      "tensor_max_absolute_difference": 0.0,
+      "unequal_tensors": [],
+      "all_tensors_exactly_equal": true
+    },
+    "eva": {
+      "source_heads": 3,
+      "teacher_rows": 24000,
+      "tensor_max_absolute_difference": 0.0,
+      "unequal_tensors": [],
+      "all_tensors_exactly_equal": true
+    }
+  },
+  "rebuilt_archive": {
+    "status": "PASS",
+    "archive_sha256": "0e92158518975d1c7f23d8b8c727919b28d08bf4a8a18308c88b0bc0b66f8aec",
+    "is_original_reference_archive": false,
+    "runtime_matches_reference": true,
+    "inference_configuration_matches_reference": true,
+    "model_files_match_reference": false,
+    "scope": "Structural/hash verification; run validate_submission.py for inference and metrics."
+  },
+  "prediction_comparison": {
+    "images": 6552,
+    "max_probability_difference": 0.0,
+    "mean_probability_difference": 0.0,
+    "changed_binary_predictions": 0,
+    "paths_identical": true,
+    "exact_prediction_match": true
+  },
+  "rebuilt_audit": {
+    "status": "PASS",
+    "images": 6552,
+    "mean": {
+      "mA": 0.9151114310728757,
+      "mA_zero_fill": 0.8619606416805828,
+      "Label_F1": 0.6369196901014959,
+      "Instance_Acc": 0.8031451353598307,
+      "Instance_Prec": 0.8442258927853691,
+      "Instance_Rec": 0.9325812122091532,
+      "Instance_F1": 0.886080669303956,
+      "Challenge_Avg": 0.9003572377861575,
+      "Challenge_Avg_zero_fill": 0.8728461120764625
+    },
+    "per_dataset": {
+      "Market1501": {
+        "mA": 0.9398136708612446,
+        "mA_zero_fill": 0.8049611746433929,
+        "Label_F1": 0.6148623390444935,
+        "Instance_Acc": 0.8407003968463879,
+        "Instance_Prec": 0.8801331002163074,
+        "Instance_Rec": 0.9414685541387509,
+        "Instance_F1": 0.909768209014585,
+        "Challenge_Avg": 0.924546903762117,
+        "Challenge_Avg_zero_fill": 0.8541617040694127
+      },
+      "PA100k": {
+        "mA": 0.9142689183972639,
+        "mA_zero_fill": 0.9142689183972639,
+        "Label_F1": 0.6666051009313534,
+        "Instance_Acc": 0.7940891081147318,
+        "Instance_Prec": 0.8348077161967924,
+        "Instance_Rec": 0.9312066738735653,
+        "Instance_F1": 0.880376197492515,
+        "Challenge_Avg": 0.8970025179213337,
+        "Challenge_Avg_zero_fill": 0.8970025179213337
+      },
+      "PETA": {
+        "mA": 0.8912517039601188,
+        "mA_zero_fill": 0.8666518320010919,
+        "Label_F1": 0.6292916303286407,
+        "Instance_Acc": 0.7746459011183723,
+        "Instance_Prec": 0.8177368619430078,
+        "Instance_Rec": 0.9250684086151437,
+        "Instance_F1": 0.8680976014047681,
+        "Challenge_Avg": 0.8795222916750218,
+        "Challenge_Avg_zero_fill": 0.8673741142386409
+      }
+    }
+  },
+  "fresh_encoder_finetuning_rerun": false,
+  "feature_caches_regenerated_from_newly_trained_encoders": false,
+  "timing_note": "Validation shared the GPU with another workload; new timings are not benchmark results.",
+  "source_files_sha256": {
+    "scripts/attribute_losses.py": "bbdbe2e6a07e847c6121a4a68ddf2f6f6dd27778dc097dc14fc7333c75a91e2a",
+    "scripts/cache_clip_large.py": "a60dfbb514e17ffe3498185fa15d681131b4305a3d4b2b1926a8df56ee9ab8c9",
+    "scripts/clip_large.py": "0938a0595c4ba625515a9b45ce00b24c981cab313621b0c05333096e6afea42e",
+    "scripts/data.py": "85ceefbec5d9c1afe04e80f5b7c8c42034bb1c01f42d9684c33617eefbb7df93",
+    "scripts/fit_clip_heads.py": "943ca7c611b5f72904d3cddbbfb8e22f19957a8e9d3ea674789dca933d26185c",
+    "scripts/fold_eval.py": "5f36d2601fc4d0c161b402bbff1c3826fe2f87513450fdf09e95159920774f6b",
+    "scripts/metrics.py": "1cc258a0c05b5a66dd000998a17fb38cab339f9469885e8bd7f56d2117f2e876",
+    "scripts/resolution_probe.py": "a3811846d9c9f59f96693f6c24ee82df1cf5e0249535a8aeb16290af69d643dd",
+    "scripts/robust_head_release.py": "2df69fda4f9d2f350d07f1eb20e3a0c5736d401e11b42826c9237a869fd58eb8",
+    "scripts/robust_head_screen.py": "3dbe681dcbcaa5846083e263a29c72d333b60444cec7d9a841b71899e1dacc5a",
+    "scripts/train_clip_large.py": "d9cf679e73674d9839fef6d07b9b3abb2a9781f24f66e771f016b243ed16aa4b",
+    "scripts/training_utils.py": "042971d7399f3804711893032c03b23c1a11fb164d8d55c5faa8de529e2e2dfc",
+    "scripts/validate_submission.py": "9cb1c386686d5286b8a5bbadc361851bfdf6de2a89a35e19f15bb0f5f4e045c8",
+    "scripts/vlm_attributes.py": "3b13767300f955ff377129e11bfde90bdcc3fe63116dcd613b939f7604bbbe5e",
+    "tools/check_environment.py": "ac33aad62847556c97ffffec733f9c105538f0515f1753a746e5f5c2319029f9",
+    "tools/common.py": "7710ebbbd247fdbbcc853abcf0b8eed5cd521b5545af11a230e3d95d52500111",
+    "tools/compare_predictions.py": "7d4121c23f944f0a165490e8d7806ae2645aa4f4024f521225b52eaaf8b8c14f",
+    "tools/download_pretrained.py": "b531195b575c222b2a20bf2d4873795464beec19b6741c138ad3b0f522617488",
+    "tools/interpolate.py": "50f70efd0bef8b9ebe165f91b778c11053b569b5096009c20b1923a449e66855",
+    "tools/make_organizer_bundle.py": "b1dfa033ad8e1d098f0550cf01057897ad884e44843500b98bff7a745640f2d7",
+    "tools/package_release.py": "a191b505f6c693445ed1b32487fdccc4acdd12e87a9cb9ad30a5b5a9ed8c85ae",
+    "tools/prepare_data.py": "30de73d82652323a6e121edf8dc62c7aaad102eef61c8e07c0d653fcacca1511",
+    "tools/reproduce.py": "297641926891c408a3b6d02564de4faa07e5a969647bfcfe236efafbf8a2e804",
+    "tools/restore_bundle.py": "ccac15c9c92d30860ec0fb6e064f22b0cbf8765858ca996fe91730f8814b8871",
+    "tools/verify_release.py": "9e6a0a28f7462ae8ce72972c2b6efd6fef8ebf3328d12838ad8188292ac7158c",
+    "configs/balanced.json": "aaea389c01f46fbdc909106eebde22ea1945c5d792a999e2b4e378c734f5106a",
+    "configs/pretrained.json": "b6362d089753a6f238f72084f54905a5ab5150de552b733ad4d0ef931adfdb11",
+    "runtime/LICENSE-EVA.txt": "80c5e100f36b0dc7dd87341705dc8a310fc7c2dcae2bff6831055bf205ee4d2e",
+    "runtime/LICENSE-PE.txt": "c71d239df91726fc519c6eb72d318ec65820627232b2f796219e87dcf35d0ab4",
+    "runtime/NOTICE.md": "31f1ec0c97439580bb8de65ec25187253e9700299b512d2afa04de5d1d61a434",
+    "runtime/metadata.yaml": "b5b7f62f63049241c2e4e7ea4cf7d350cb7c5d427335cb1bbedcda9a1b8b397a",
+    "runtime/run.py": "dae04b9f6cb91e8f0c2c075383f749af89190b3a3b41d2f72507ab5f83673f54"
+  }
+}

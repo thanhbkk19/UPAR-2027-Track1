@@ -1,0 +1,490 @@
+{
+  "target_archive": "UPAR_Track1_PE_EVA_Balanced_v18.zip",
+  "target_sha256": "3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d",
+  "train_images": 117970,
+  "tune_images": 6554,
+  "audit_images": 6552,
+  "seed_frozen_head": 2092,
+  "seed_encoder": 2093,
+  "seed_readouts": 0,
+  "teacher_weight": 0.2,
+  "original_weight": 0.25,
+  "prior_power": 0.4,
+  "global_bias": 0.0,
+  "stages": [
+    {
+      "name": "cache-pe",
+      "command": [
+        "scripts/cache_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "--height",
+        "336",
+        "--width",
+        "168",
+        "--name",
+        "vit_pe_core_large_patch14_336.fb",
+        "--output",
+        "artifacts/features/pe_core_l_train90",
+        "--batch-size",
+        "128",
+        "--workers",
+        "8"
+      ],
+      "inputs": [
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/features/pe_core_l_train90/manifest.json",
+        "artifacts/features/pe_core_l_train90/train_features.npy",
+        "artifacts/features/pe_core_l_train90/tune_features.npy",
+        "artifacts/features/pe_core_l_train90/train_labels.npz",
+        "artifacts/features/pe_core_l_train90/tune_labels.npz"
+      ]
+    },
+    {
+      "name": "frozen-head-pe",
+      "command": [
+        "scripts/fit_clip_heads.py",
+        "--cache",
+        "artifacts/features/pe_core_l_train90",
+        "--output",
+        "artifacts/runs/pe_core_l_frozen_heads",
+        "--epochs",
+        "25",
+        "--batch-size",
+        "2048",
+        "--domain-power",
+        "0.5"
+      ],
+      "inputs": [
+        "artifacts/features/pe_core_l_train90/manifest.json",
+        "artifacts/features/pe_core_l_train90/train_features.npy",
+        "artifacts/features/pe_core_l_train90/train_labels.npz",
+        "artifacts/features/pe_core_l_train90/tune_features.npy",
+        "artifacts/features/pe_core_l_train90/tune_labels.npz"
+      ],
+      "outputs": [
+        "artifacts/runs/pe_core_l_frozen_heads/regional_best.pt",
+        "artifacts/runs/pe_core_l_frozen_heads/summary.json"
+      ]
+    },
+    {
+      "name": "finetune-pe",
+      "command": [
+        "scripts/train_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "--height",
+        "336",
+        "--width",
+        "168",
+        "--head-checkpoint",
+        "artifacts/runs/pe_core_l_frozen_heads/regional_best.pt",
+        "--output",
+        "artifacts/runs/pe_deep24_v9",
+        "--epochs",
+        "3",
+        "--last-blocks",
+        "24",
+        "--batch-size",
+        "64",
+        "--workers",
+        "6",
+        "--encoder-lr",
+        "1e-5",
+        "--head-lr",
+        "2e-4",
+        "--seed",
+        "2093",
+        "--domain-power",
+        ".5",
+        "--timm-name",
+        "vit_pe_core_large_patch14_336.fb"
+      ],
+      "inputs": [
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "artifacts/runs/pe_core_l_frozen_heads/regional_best.pt",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/runs/pe_deep24_v9/best.pt",
+        "artifacts/runs/pe_deep24_v9/complete.json"
+      ]
+    },
+    {
+      "name": "interpolate-pe",
+      "command": [
+        "tools/interpolate.py",
+        "--checkpoint",
+        "artifacts/runs/pe_deep24_v9/best.pt",
+        "--weights",
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "--head",
+        "artifacts/runs/pe_core_l_frozen_heads/regional_best.pt",
+        "--alpha",
+        "0.8",
+        "--output",
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt"
+      ],
+      "inputs": [
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "artifacts/runs/pe_core_l_frozen_heads/regional_best.pt",
+        "artifacts/runs/pe_deep24_v9/best.pt"
+      ],
+      "outputs": [
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt"
+      ]
+    },
+    {
+      "name": "readout-cache-pe",
+      "command": [
+        "scripts/cache_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "--height",
+        "336",
+        "--width",
+        "168",
+        "--name",
+        "vit_pe_core_large_patch14_336.fb",
+        "--checkpoint",
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt",
+        "--output",
+        "artifacts/features/v11wise_pe",
+        "--batch-size",
+        "256",
+        "--workers",
+        "12"
+      ],
+      "inputs": [
+        "artifacts/pretrained/pe_core_l/model.safetensors",
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/features/v11wise_pe/manifest.json",
+        "artifacts/features/v11wise_pe/train_features.npy",
+        "artifacts/features/v11wise_pe/tune_features.npy",
+        "artifacts/features/v11wise_pe/train_labels.npz",
+        "artifacts/features/v11wise_pe/tune_labels.npz"
+      ]
+    },
+    {
+      "name": "readout-fit-pe",
+      "command": [
+        "scripts/robust_head_release.py",
+        "fit",
+        "--cache",
+        "artifacts/features/v11wise_pe",
+        "--checkpoint",
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt",
+        "--output",
+        "artifacts/robust_heads_v15/pe_release.pt"
+      ],
+      "inputs": [
+        "artifacts/features/v11wise_pe/train_features.npy",
+        "artifacts/features/v11wise_pe/train_labels.npz",
+        "artifacts/features/v11wise_pe/manifest.json",
+        "artifacts/runs/pe_deep24_v9/wise_0.8.pt",
+        "artifacts/loso/vlm_train24k.npz"
+      ],
+      "outputs": [
+        "artifacts/robust_heads_v15/pe_release.pt"
+      ]
+    },
+    {
+      "name": "cache-eva",
+      "command": [
+        "scripts/cache_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "--height",
+        "224",
+        "--width",
+        "224",
+        "--name",
+        "eva02_large_patch14_clip_224.merged2b",
+        "--output",
+        "artifacts/features/eva02_l_train90",
+        "--batch-size",
+        "128",
+        "--workers",
+        "8"
+      ],
+      "inputs": [
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/features/eva02_l_train90/manifest.json",
+        "artifacts/features/eva02_l_train90/train_features.npy",
+        "artifacts/features/eva02_l_train90/tune_features.npy",
+        "artifacts/features/eva02_l_train90/train_labels.npz",
+        "artifacts/features/eva02_l_train90/tune_labels.npz"
+      ]
+    },
+    {
+      "name": "frozen-head-eva",
+      "command": [
+        "scripts/fit_clip_heads.py",
+        "--cache",
+        "artifacts/features/eva02_l_train90",
+        "--output",
+        "artifacts/runs/eva02_l_frozen_heads",
+        "--epochs",
+        "25",
+        "--batch-size",
+        "2048",
+        "--domain-power",
+        "0.5"
+      ],
+      "inputs": [
+        "artifacts/features/eva02_l_train90/manifest.json",
+        "artifacts/features/eva02_l_train90/train_features.npy",
+        "artifacts/features/eva02_l_train90/train_labels.npz",
+        "artifacts/features/eva02_l_train90/tune_features.npy",
+        "artifacts/features/eva02_l_train90/tune_labels.npz"
+      ],
+      "outputs": [
+        "artifacts/runs/eva02_l_frozen_heads/regional_best.pt",
+        "artifacts/runs/eva02_l_frozen_heads/summary.json"
+      ]
+    },
+    {
+      "name": "finetune-eva",
+      "command": [
+        "scripts/train_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "--height",
+        "224",
+        "--width",
+        "224",
+        "--head-checkpoint",
+        "artifacts/runs/eva02_l_frozen_heads/regional_best.pt",
+        "--output",
+        "artifacts/runs/eva_deep24_v9",
+        "--epochs",
+        "3",
+        "--last-blocks",
+        "24",
+        "--batch-size",
+        "64",
+        "--workers",
+        "6",
+        "--encoder-lr",
+        "1e-5",
+        "--head-lr",
+        "2e-4",
+        "--seed",
+        "2093",
+        "--domain-power",
+        ".5",
+        "--timm-name",
+        "eva02_large_patch14_clip_224.merged2b"
+      ],
+      "inputs": [
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "artifacts/runs/eva02_l_frozen_heads/regional_best.pt",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/runs/eva_deep24_v9/best.pt",
+        "artifacts/runs/eva_deep24_v9/complete.json"
+      ]
+    },
+    {
+      "name": "interpolate-eva",
+      "command": [
+        "tools/interpolate.py",
+        "--checkpoint",
+        "artifacts/runs/eva_deep24_v9/best.pt",
+        "--weights",
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "--head",
+        "artifacts/runs/eva02_l_frozen_heads/regional_best.pt",
+        "--alpha",
+        "0.75",
+        "--output",
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt"
+      ],
+      "inputs": [
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "artifacts/runs/eva02_l_frozen_heads/regional_best.pt",
+        "artifacts/runs/eva_deep24_v9/best.pt"
+      ],
+      "outputs": [
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt"
+      ]
+    },
+    {
+      "name": "readout-cache-eva",
+      "command": [
+        "scripts/cache_clip_large.py",
+        "--weights",
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "--height",
+        "224",
+        "--width",
+        "224",
+        "--name",
+        "eva02_large_patch14_clip_224.merged2b",
+        "--checkpoint",
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt",
+        "--output",
+        "artifacts/features/fast_release_eva",
+        "--batch-size",
+        "128",
+        "--workers",
+        "6",
+        "--inference-size",
+        "196",
+        "196",
+        "--pure-half"
+      ],
+      "inputs": [
+        "artifacts/pretrained/eva02_l_clip/model.safetensors",
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt",
+        "data/splits/train90_v1/train.csv",
+        "data/splits/train90_v1/tune.csv"
+      ],
+      "outputs": [
+        "artifacts/features/fast_release_eva/manifest.json",
+        "artifacts/features/fast_release_eva/train_features.npy",
+        "artifacts/features/fast_release_eva/tune_features.npy",
+        "artifacts/features/fast_release_eva/train_labels.npz",
+        "artifacts/features/fast_release_eva/tune_labels.npz"
+      ]
+    },
+    {
+      "name": "readout-fit-eva",
+      "command": [
+        "scripts/robust_head_release.py",
+        "fit",
+        "--cache",
+        "artifacts/features/fast_release_eva",
+        "--checkpoint",
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt",
+        "--output",
+        "artifacts/fast_robust_v17/eva_release.pt"
+      ],
+      "inputs": [
+        "artifacts/features/fast_release_eva/train_features.npy",
+        "artifacts/features/fast_release_eva/train_labels.npz",
+        "artifacts/features/fast_release_eva/manifest.json",
+        "artifacts/runs/eva_deep24_v9/wise_0.75.pt",
+        "artifacts/loso/vlm_train24k.npz"
+      ],
+      "outputs": [
+        "artifacts/fast_robust_v17/eva_release.pt"
+      ]
+    },
+    {
+      "name": "export-pe",
+      "command": [
+        "scripts/robust_head_release.py",
+        "export",
+        "--checkpoint",
+        "artifacts/robust_heads_v15/pe_release.pt",
+        "--output",
+        "artifacts/mixed_candidate_v18/pe_mixed_half.pt",
+        "--original-weight",
+        ".25"
+      ],
+      "inputs": [
+        "artifacts/robust_heads_v15/pe_release.pt"
+      ],
+      "outputs": [
+        "artifacts/mixed_candidate_v18/pe_mixed_half.pt",
+        "artifacts/mixed_candidate_v18/pe_mixed_half.json"
+      ]
+    },
+    {
+      "name": "export-eva",
+      "command": [
+        "scripts/robust_head_release.py",
+        "export",
+        "--checkpoint",
+        "artifacts/fast_robust_v17/eva_release.pt",
+        "--output",
+        "artifacts/mixed_candidate_v18/eva_mixed_half.pt",
+        "--original-weight",
+        ".25"
+      ],
+      "inputs": [
+        "artifacts/fast_robust_v17/eva_release.pt"
+      ],
+      "outputs": [
+        "artifacts/mixed_candidate_v18/eva_mixed_half.pt",
+        "artifacts/mixed_candidate_v18/eva_mixed_half.json"
+      ]
+    },
+    {
+      "name": "package",
+      "command": [
+        "tools/package_release.py",
+        "--pe",
+        "artifacts/mixed_candidate_v18/pe_mixed_half.pt",
+        "--eva",
+        "artifacts/mixed_candidate_v18/eva_mixed_half.pt",
+        "--output",
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip"
+      ],
+      "inputs": [
+        "artifacts/mixed_candidate_v18/pe_mixed_half.pt",
+        "artifacts/mixed_candidate_v18/eva_mixed_half.pt",
+        "artifacts/mixed_candidate_v18/pe_mixed_half.json",
+        "artifacts/mixed_candidate_v18/eva_mixed_half.json",
+        "data/splits/train90_v1/train.csv",
+        "artifacts/robust_heads_v15/pe_release.pt",
+        "artifacts/fast_robust_v17/eva_release.pt"
+      ],
+      "outputs": [
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip"
+      ]
+    },
+    {
+      "name": "verify",
+      "command": [
+        "tools/verify_release.py",
+        "--archive",
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip"
+      ],
+      "inputs": [
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip"
+      ],
+      "outputs": [
+        "reports/local/archive_integrity.json"
+      ]
+    },
+    {
+      "name": "evaluate",
+      "command": [
+        "scripts/validate_submission.py",
+        "--archive",
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip",
+        "--data",
+        "data",
+        "--annotations",
+        "data/splits/train90_v1/audit.csv",
+        "--output",
+        "reports/local/reproduced_audit.json"
+      ],
+      "inputs": [
+        "dist/UPAR_Track1_PE_EVA_Balanced_reproduced.zip",
+        "data/splits/train90_v1/audit.csv"
+      ],
+      "outputs": [
+        "reports/local/reproduced_audit.json",
+        "reports/local/reproduced_audit.npz"
+      ]
+    }
+  ]
+}

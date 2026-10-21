@@ -1,0 +1,14 @@
+{
+  "dist/UPAR_Track1_PE_EVA_Balanced_v18.zip": {
+    "sha256": "3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d",
+    "bytes": 1151426936
+  },
+  "artifacts/robust_heads_v15/pe_release.pt": {
+    "sha256": "8b2a2072a949adcb9f244fe980a6f14153194fc2ed05695ed92c52b3d81868f6",
+    "bytes": 1274565535
+  },
+  "artifacts/fast_robust_v17/eva_release.pt": {
+    "sha256": "b11214646311037218147ff4e075a55f1ab594b376087e805fe96729a53927fb",
+    "bytes": 1223616775
+  }
+}

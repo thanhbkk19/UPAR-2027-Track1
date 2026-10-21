@@ -1,0 +1,10 @@
+# Recorded training environment: Python 3.12, PyTorch CUDA 12.8.
+# Install torch/torchvision with the command in README.md first.
+torch==2.11.0
+torchvision==0.26.0
+timm==1.0.22
+numpy==2.5.3
+Pillow==12.3.0
+safetensors==0.8.0
+huggingface-hub==2.1.1
+PyYAML==6.0.3

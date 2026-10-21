@@ -1,0 +1,16 @@
+__pycache__/
+*.pyc
+.venv*/
+.env*
+/artifacts/
+/data/
+/dist/
+/build/
+/logs/
+/reports/local/
+*.pt
+*.safetensors
+*.zip
+*.tar
+*.tar.gz
+!splits/*.gz
