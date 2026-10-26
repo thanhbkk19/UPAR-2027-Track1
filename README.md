@@ -17,7 +17,7 @@ The scores are the mean over sources of the harmonic mean of mA and instance F1,
 
 | File | Size | SHA256 | Link |
 |---|---:|---|---|
-| `best_submission.zip` (the submitted v18 package) | 1.15 GB | `3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d` | BEST_SUBMISSION_LINK |
+| `best_submission.zip` (the submitted v18 package) | 1.15 GB | `3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d` | https://drive.google.com/file/d/1avXBHFERjKtDOR1HO5DQm3YQqANqz4Ew/view?usp=sharing |
 | `release_checkpoints.zip` (trained encoders and readouts, optional) | 2.5 GB | `6fe5f54003779c1ee0d44ddcd3b7fc580d82743b7486df57df13a599cda766ef` | https://drive.google.com/file/d/1loYjWglqsy7Qss319jgkU8i0mJiGYVKr/view?usp=sharing |
 
 ## 1. Method
