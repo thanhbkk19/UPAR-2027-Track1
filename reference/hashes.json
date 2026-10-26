@@ -1,0 +1,27 @@
+{
+  "official_train": "e42084aa43b31d4074624265b8239437afc6e47a359a8c0129fae4513a77d424",
+  "official_val": "783be600e359052c9dafe856cbfa2aee45bbd4e3eac10309394e2388bcf7c2bc",
+  "teacher_targets": "c0b84d6612daa40ea5f943d579bfea46227f14c1d74e4a1779bd6fcf2a7e26ec",
+  "reference_audit_probabilities": "570551099a7cd1b4b85580270e245e1ccf8a77c71d8a9293c5d59ec8d47e29b4",
+  "csv": {
+    "release/train": "7f2a60fd82ed27fa5cf572f5a3d40e09b0bf8d0ac1fd81503a7527aef14ef5fd",
+    "release/tune": "50675ddcb1d9b5bd8f42fff53ced8bc271dfe3ef4080f55d64ec9c723195e4f3",
+    "release/audit": "78186984daeed57a09a331adf12b512e1305fad448dde081acae9cb3a0b2ba40",
+    "release/val": "d247802ef0010ccd245297d6aea6a0a35b378adff8677e833bfeea889eda13dd",
+    "teacher": "8788c95c4c0a27faca0a2656c16eaec89c87e3b5695d35cedac7b08b70ef272a",
+    "loso_PETA/train": "0007642c4a7561c57399e27951dac4c53856d32a68edfdc4e3f7906c26f29277",
+    "loso_PETA/tune": "dcea5d76faeaeb9bb2de845ce08f0de91ee85396a7b82790522e08a14089bb5b",
+    "loso_Market1501/train": "ea88cf19f3176cee8826ef58e41acb27d441008efc400331d987afa6190de05f",
+    "loso_Market1501/tune": "72202cdbd7849461fb835f7b823561ef02315ba98c5e4a6c9719597c58578926",
+    "loso_PA100k/train": "b58030698d467e43897bfcc07740639b00e26da9ab45df7496099cd8e55e1dc9",
+    "loso_PA100k/tune": "efb4d4d96eca3965a682f99b13e2b4b67d7a00678d3589e249740a1275173e7f",
+    "loso_Market1501/audit": "83ebcfadcd02e9d0e62a5c10028ea3588dba54fea71a39e9bcce0d4d162411dc",
+    "loso_PA100k/audit": "392f8f1dd633d69af5839da7b7925ee5a92eac557bec61834cc515d229fcc0c3",
+    "loso_PETA/audit": "593892e35c82d529667f6e003d7d69d3c7c86201372b0231ff4e880809111a08"
+  },
+  "release_checkpoints": {
+    "pe": "8b2a2072a949adcb9f244fe980a6f14153194fc2ed05695ed92c52b3d81868f6",
+    "eva": "b11214646311037218147ff4e075a55f1ab594b376087e805fe96729a53927fb"
+  },
+  "best_submission": "3cb753cf4eaedc93885459e391cccd5d091b98ec7cbd31214cd95abf86d49d9d"
+}

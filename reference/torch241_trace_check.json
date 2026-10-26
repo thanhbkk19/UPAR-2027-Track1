@@ -1,1 +1,0 @@
-{"status": "PASS", "torch": "2.4.1+cu121", "device": "cpu", "checks": [{"model": "assets/pe_mixed_half.pt", "shape": [1, 40], "finite": true}, {"model": "assets/eva_mixed_half.pt", "shape": [1, 40], "finite": true}], "limitation": "Trace compatibility only; not the CUDA API or an A10 speed test."}

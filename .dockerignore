@@ -1,0 +1,9 @@
+work
+data
+pretrained
+logs
+checkpoints
+reports
+*.zip
+__pycache__
+.git

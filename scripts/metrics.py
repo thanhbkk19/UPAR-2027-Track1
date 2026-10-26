@@ -9,7 +9,6 @@ def score_dataset(labels, probabilities):
         raise ValueError('Expected equal N x C arrays')
     if not np.isfinite(probabilities).all():
         raise ValueError('Nonfinite predictions')
-    # Invalid attributes are excluded, as specified on the competition page.
     keep = np.all((labels == 0) | (labels == 1), axis=0)
     labels, pred = labels[:, keep] == 1, probabilities[:, keep] > 0.5
     if not labels.shape[1] or not labels.shape[0]:
@@ -18,8 +17,7 @@ def score_dataset(labels, probabilities):
     tp = (labels & pred).sum(0).astype(float)
     tn = (~labels & ~pred).sum(0).astype(float)
     pos, neg = labels.sum(0), (~labels).sum(0)
-    # Match the supplied baseline report: average only supported polarities.
-    # Also expose the zero-fill variant until private scorer parity is verified.
+    # mA averages supported polarities only; the zero-filled variant is reported alongside.
     tpr, tnr = tp / (pos + eps), tn / (neg + eps)
     ma = ((tpr + tnr) / ((pos > 0).astype(float) + (neg > 0))).mean()
     ma_zero_fill = ((tpr + tnr) * 0.5).mean()
